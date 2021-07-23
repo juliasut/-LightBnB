@@ -19,10 +19,10 @@ const pool = new Pool({
  */
 const getUserWithEmail = (email) => {
   pool
-    .query('SELECT * FROM users WHERE email = $1', [email])
+    .query(`SELECT * FROM users WHERE email = $1`, [email])
     .then((res) => res.rows[0])
-    .catch((err) => err.message)
-}
+    .catch((err) => err.message);
+};
 exports.getUserWithEmail = getUserWithEmail;
 
 /**
@@ -30,8 +30,11 @@ exports.getUserWithEmail = getUserWithEmail;
  * @param {string} id The id of the user.
  * @return {Promise<{}>} A promise to the user.
  */
-const getUserWithId = function(id) {
-  return Promise.resolve(users[id]);
+const getUserWithId = (id) => {
+  pool
+    .query(`SELECT * FROM users WHERE id = $1`, [id])
+    .then((res) => res.rows[0])
+    .catch((err) => err.message)
 }
 exports.getUserWithId = getUserWithId;
 
@@ -76,7 +79,7 @@ exports.getAllReservations = getAllReservations;
     .catch((err) => console.log(err.message));
 };
 exports.getAllProperties = getAllProperties;
-console.log(getAllProperties(2, 2));
+
 
 
 
